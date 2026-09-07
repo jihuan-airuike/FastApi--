@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>提问</title>
+</head>
+<body>
+
+<form onsubmit="return chufa(event)">
+    <input id="unload" type="text" name="text" placeholder="请输入问题">
+    <span style="color: crimson;margin-left: 10px" id="warrr"></span>
+    <br>
+    <button id="unloadbtn" type="submit">提交问题</button>
+</form>
+<div id="result" style="margin-top:20px; white-space:pre-wrap;"></div>
+<br>
+
+<script>
+
+async function chufa(event) {
+
+    event.preventDefault();
+
+    const q        = document.getElementById("unload").value.trim();   // 用户输入的问题（去两端空格）
+    const war      = document.getElementById("warrr");                 // 错误提示元素
+    const btn      = document.getElementById("unloadbtn");             // 提交按钮元素
+    const resultDiv = document.getElementById("result");               // 结果展示区域
+    if(!q){
+        war.innerText='提交的问题不能为空'
+        return false
+    }
+    war.innerText=''
+    btn.disabled=true
+    btn.innerText='提交中。。。'
+    try{
+        const res=await fetch('/answer',{
+            method:'post',
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({question: q})
+        });
+        const data=await res.json()
+        resultDiv.innerText = "问题：" + data.question + "\n\n回答：" + data.result+data.source;
+    }catch (err){
+        war.innerText=err.message
+    }finally {
+        btn.disabled=false
+        btn.innerText='提交问题'
+    }
+}
+</script>
+</body>
+</html>

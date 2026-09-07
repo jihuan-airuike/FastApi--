@@ -1,0 +1,19 @@
+# 虚拟环境
+venv/
+.env
+__pycache__/
+*.pyc
+
+# chroma向量库数据目录
+persistent.db
+
+# 日志
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# 大模型密钥，千万不要提交！
+*.env

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/upload" method="post" enctype="multipart/form-data" onsubmit="return chufa()">
+    <input id="load" type="file" name="file">
+    <span style="color: crimson;margin-left: 10px" id='warrr'></span>
+    <br>
+    <button id="loadbtn" type="submit">点击上传</button>
+</form>
+<br>
+<a href="{{url_for('question')}}">提问</a>
+<script>
+    function chufa() {
+        const filename = document.getElementById('load');
+        const war=document.getElementById('warrr');
+        if(!filename.files[0]){
+            war.innerText='!文件不能为空';
+            return false;
+        }else {
+            war.innerText='';
+            return true;
+        }
+    }
+</script>
+</body>
+</html>
